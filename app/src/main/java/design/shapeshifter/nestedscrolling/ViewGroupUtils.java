@@ -14,7 +14,7 @@ import android.view.ViewParent;
 final class ViewGroupUtils {
   private static final Matrix sMatrix = new Matrix();
   private static final RectF sRectF = new RectF();
-  private static final Matrix IDENTITY = new Matrix();
+  private static final Matrix sIdentity = new Matrix();
   private static final Rect sRect = new Rect();
 
   /**
@@ -56,7 +56,7 @@ final class ViewGroupUtils {
    */
   private static void offsetDescendantRect(
       ViewGroup parent, View descendant, Rect rect) {
-    sMatrix.set(IDENTITY);
+    sMatrix.set(sIdentity);
     offsetDescendantMatrix(parent, descendant, sMatrix);
     sRectF.set(rect);
     sMatrix.mapRect(sRectF);
