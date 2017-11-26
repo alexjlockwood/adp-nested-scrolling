@@ -47,8 +47,8 @@ class CustomBehavior extends CoordinatorLayout.Behavior<NestedScrollView> {
     final int recyclerViewMaxHeight = child.getHeight() - fabHalfHeight
         - child.findViewById(R.id.card_title).getHeight()
         - child.findViewById(R.id.card_subtitle).getHeight();
-    ((MaxHeightRecyclerView) child.findViewById(R.id.card_recyclerview))
-        .setMaxHeight(recyclerViewMaxHeight);
+    final MaxHeightRecyclerView recyclerView = child.findViewById(R.id.card_recyclerview);
+    recyclerView.setMaxHeight(recyclerViewMaxHeight);
 
     // Give the card container top padding so that only the top edge of the card
     // initially appears at the bottom of the screen. The total padding will
@@ -57,8 +57,13 @@ class CustomBehavior extends CoordinatorLayout.Behavior<NestedScrollView> {
     final int toolbarContainerHeight = parent.getDependencies(child).get(0).getHeight();
     setPaddingTop(cardContainer, recyclerViewMaxHeight - toolbarContainerHeight);
 
+    // Give the RecyclerView
+    setPaddingBottom(recyclerView, toolbarContainerHeight);
+
     // Offset the child's height so that its bounds don't overlap the toolbar container.
-    ViewCompat.offsetTopAndBottom(child, toolbarContainerHeight);
+    // Add the same amount of bottom padding to the RecyclerView so it doesn't display
+    // its content underneath the navigation bar.
+     ViewCompat.offsetTopAndBottom(child, toolbarContainerHeight);
 
     // Return true so that the parent doesn't waste time laying out the
     // child again (any modifications made above will have triggered a second
@@ -77,6 +82,12 @@ class CustomBehavior extends CoordinatorLayout.Behavior<NestedScrollView> {
   private static void setPaddingTop(View view, int paddingTop) {
     if (view.getPaddingTop() != paddingTop) {
       view.setPadding(0, paddingTop, 0, 0);
+    }
+  }
+
+  private static void setPaddingBottom(View view, int paddingBottom) {
+    if (view.getPaddingBottom() != paddingBottom) {
+      view.setPadding(0, 0, 0, paddingBottom);
     }
   }
 
