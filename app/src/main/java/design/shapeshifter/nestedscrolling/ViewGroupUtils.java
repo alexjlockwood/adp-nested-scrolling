@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 /**
- * A simple utility class copied from the design support library source code
- * (see https://goo.gl/VJx5ks).
+ * A simple utility class copied from the design support library
+ * source code (see j.mp/ViewGroupUtils).
  */
 final class ViewGroupUtils {
   private static final Matrix sMatrix = new Matrix();
@@ -26,8 +26,7 @@ final class ViewGroupUtils {
    * @param y     Y coordinate to test, in the parent's coordinate system
    * @return true if the point is within the child's bounds, false otherwise
    */
-  static boolean isPointInChildBounds(
-      ViewGroup parent, View child, int x, int y) {
+  static boolean isPointInChildBounds(ViewGroup parent, View child, int x, int y) {
     getDescendantRect(parent, child, sRect);
     return sRect.contains(x, y);
   }
@@ -39,8 +38,7 @@ final class ViewGroupUtils {
    * @param descendant descendant view to reference
    * @param out        rect to set to the bounds of the descendant view
    */
-  private static void getDescendantRect(
-      ViewGroup parent, View descendant, Rect out) {
+  private static void getDescendantRect(ViewGroup parent, View descendant, Rect out) {
     out.set(0, 0, descendant.getWidth(), descendant.getHeight());
     offsetDescendantRect(parent, descendant, out);
   }
@@ -54,18 +52,19 @@ final class ViewGroupUtils {
    * @param descendant view defining the original coordinate system of rect
    * @param rect       the rect to offset from descendant to this view's coordinate system
    */
-  private static void offsetDescendantRect(
-      ViewGroup parent, View descendant, Rect rect) {
+  private static void offsetDescendantRect(ViewGroup parent, View descendant, Rect rect) {
     sMatrix.set(sIdentity);
     offsetDescendantMatrix(parent, descendant, sMatrix);
     sRectF.set(rect);
     sMatrix.mapRect(sRectF);
-    rect.set((int) (sRectF.left + 0.5f), (int) (sRectF.top + 0.5f),
-        (int) (sRectF.right + 0.5f), (int) (sRectF.bottom + 0.5f));
+    final int left = (int) (sRectF.left + 0.5f);
+    final int top = (int) (sRectF.top + 0.5f);
+    final int right = (int) (sRectF.right + 0.5f);
+    final int bottom = (int) (sRectF.bottom + 0.5f);
+    rect.set(left, top, right, bottom);
   }
 
-  private static void offsetDescendantMatrix(
-      ViewParent target, View view, Matrix m) {
+  private static void offsetDescendantMatrix(ViewParent target, View view, Matrix m) {
     final ViewParent parent = view.getParent();
     if (parent instanceof View && parent != target) {
       final View vp = (View) parent;
