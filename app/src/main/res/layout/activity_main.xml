@@ -30,7 +30,7 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     </FrameLayout>
 
-    <design.shapeshifter.nestedscrolling.ExtendedNestedScrollView2
+    <design.shapeshifter.nestedscrolling.CustomNestedScrollView2
         android:id='@+id/nestedscrollview'
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -113,6 +113,6 @@
 
         </FrameLayout>
 
-    </design.shapeshifter.nestedscrolling.ExtendedNestedScrollView2>
+    </design.shapeshifter.nestedscrolling.CustomNestedScrollView2>
 
 </android.support.design.widget.CoordinatorLayout>
