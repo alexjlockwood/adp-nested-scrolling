@@ -57,13 +57,12 @@ class CustomBehavior extends CoordinatorLayout.Behavior<NestedScrollView> {
     final int toolbarContainerHeight = parent.getDependencies(child).get(0).getHeight();
     setPaddingTop(cardContainer, recyclerViewMaxHeight - toolbarContainerHeight);
 
-    // Give the RecyclerView
-    setPaddingBottom(recyclerView, toolbarContainerHeight);
-
     // Offset the child's height so that its bounds don't overlap the toolbar container.
+    ViewCompat.offsetTopAndBottom(child, toolbarContainerHeight);
+
     // Add the same amount of bottom padding to the RecyclerView so it doesn't display
     // its content underneath the navigation bar.
-     ViewCompat.offsetTopAndBottom(child, toolbarContainerHeight);
+    setPaddingBottom(recyclerView, toolbarContainerHeight);
 
     // Return true so that the parent doesn't waste time laying out the
     // child again (any modifications made above will have triggered a second
@@ -71,23 +70,23 @@ class CustomBehavior extends CoordinatorLayout.Behavior<NestedScrollView> {
     return true;
   }
 
-  private static void setTopMargin(View view, int topMargin) {
-    final MarginLayoutParams lp = (MarginLayoutParams) view.getLayoutParams();
+  private static void setTopMargin(View v, int topMargin) {
+    final MarginLayoutParams lp = (MarginLayoutParams) v.getLayoutParams();
     if (lp.topMargin != topMargin) {
       lp.topMargin = topMargin;
-      view.setLayoutParams(lp);
+      v.setLayoutParams(lp);
     }
   }
 
-  private static void setPaddingTop(View view, int paddingTop) {
-    if (view.getPaddingTop() != paddingTop) {
-      view.setPadding(0, paddingTop, 0, 0);
+  private static void setPaddingTop(View v, int paddingTop) {
+    if (v.getPaddingTop() != paddingTop) {
+      v.setPadding(v.getPaddingLeft(), paddingTop, v.getPaddingRight(), v.getPaddingBottom());
     }
   }
 
-  private static void setPaddingBottom(View view, int paddingBottom) {
-    if (view.getPaddingBottom() != paddingBottom) {
-      view.setPadding(0, 0, 0, paddingBottom);
+  private static void setPaddingBottom(View v, int paddingBottom) {
+    if (v.getPaddingBottom() != paddingBottom) {
+      v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), paddingBottom);
     }
   }
 
