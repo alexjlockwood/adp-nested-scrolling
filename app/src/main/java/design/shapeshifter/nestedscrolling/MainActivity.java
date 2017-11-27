@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
         .into((ImageView) findViewById(R.id.background_image));
 
     final RecyclerView rv = findViewById(R.id.card_recyclerview);
-    final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-    rv.setLayoutManager(layoutManager);
+    final LinearLayoutManager lm = new LinearLayoutManager(this);
+    rv.setLayoutManager(lm);
     rv.setAdapter(new LoremIpsumAdapter(this));
-    rv.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
+    rv.addItemDecoration(new DividerItemDecoration(this, lm.getOrientation()));
 
     final View cardHeaderShadow = findViewById(R.id.card_header_shadow);
     rv.addOnScrollListener(new OnScrollListener() {
@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
         // Animate the shadow view in/out as the user scrolls so that it
         // looks like the RecyclerView is scrolling beneath the card header.
         final boolean isRecyclerViewScrolledToTop =
-            layoutManager.findFirstVisibleItemPosition() == 0
-                && layoutManager.findViewByPosition(0).getTop() == 0;
+            lm.findFirstVisibleItemPosition() == 0
+                && lm.findViewByPosition(0).getTop() == 0;
         if (!isRecyclerViewScrolledToTop && !mIsShowingCardHeaderShadow) {
           mIsShowingCardHeaderShadow = true;
           showOrHideView(cardHeaderShadow, true);
@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
     nsv.setOverScrollMode(View.OVER_SCROLL_NEVER);
     nsv.setOnScrollChangeListener(new OnScrollChangeListener() {
       @Override
-      public void onScrollChange(NestedScrollView nsv, int scrollX, int scrollY,
-                                 int oldScrollX, int oldScrollY) {
+      public void onScrollChange(
+          NestedScrollView nsv, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
         if (scrollY == 0 && oldScrollY > 0) {
           // Reset the RecyclerView's scroll position each time the card
           // returns to its starting position.

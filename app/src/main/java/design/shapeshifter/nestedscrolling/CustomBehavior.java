@@ -44,25 +44,29 @@ class CustomBehavior extends CoordinatorLayout.Behavior<NestedScrollView> {
 
     // Give the RecyclerView a maximum height to ensure the card will never
     // overlap the toolbar as it scrolls.
-    final int recyclerViewMaxHeight = child.getHeight() - fabHalfHeight
-        - child.findViewById(R.id.card_title).getHeight()
-        - child.findViewById(R.id.card_subtitle).getHeight();
-    final MaxHeightRecyclerView recyclerView = child.findViewById(R.id.card_recyclerview);
-    recyclerView.setMaxHeight(recyclerViewMaxHeight);
+    final int rvMaxHeight =
+        child.getHeight()
+            - fabHalfHeight
+            - child.findViewById(R.id.card_title).getHeight()
+            - child.findViewById(R.id.card_subtitle).getHeight();
+    final MaxHeightRecyclerView rv = child.findViewById(R.id.card_recyclerview);
+    rv.setMaxHeight(rvMaxHeight);
 
     // Give the card container top padding so that only the top edge of the card
     // initially appears at the bottom of the screen. The total padding will
     // be the distance from the top of the screen to the FAB's top edge.
     final View cardContainer = child.findViewById(R.id.card_container);
-    final int toolbarContainerHeight = parent.getDependencies(child).get(0).getHeight();
-    setPaddingTop(cardContainer, recyclerViewMaxHeight - toolbarContainerHeight);
+    final int toolbarContainerHeight =
+        parent.getDependencies(child).get(0).getHeight();
+    setPaddingTop(cardContainer, rvMaxHeight - toolbarContainerHeight);
 
-    // Offset the child's height so that its bounds don't overlap the toolbar container.
+    // Offset the child's height so that its bounds don't overlap the
+    // toolbar container.
     ViewCompat.offsetTopAndBottom(child, toolbarContainerHeight);
 
-    // Add the same amount of bottom padding to the RecyclerView so it doesn't display
-    // its content underneath the navigation bar.
-    setPaddingBottom(recyclerView, toolbarContainerHeight);
+    // Add the same amount of bottom padding to the RecyclerView so it doesn't
+    // display its content underneath the navigation bar.
+    setPaddingBottom(rv, toolbarContainerHeight);
 
     // Return true so that the parent doesn't waste time laying out the
     // child again (any modifications made above will have triggered a second
@@ -78,15 +82,15 @@ class CustomBehavior extends CoordinatorLayout.Behavior<NestedScrollView> {
     }
   }
 
-  private static void setPaddingTop(View v, int paddingTop) {
-    if (v.getPaddingTop() != paddingTop) {
-      v.setPadding(v.getPaddingLeft(), paddingTop, v.getPaddingRight(), v.getPaddingBottom());
+  private static void setPaddingTop(View v, int top) {
+    if (v.getPaddingTop() != top) {
+      v.setPadding(v.getPaddingLeft(), top, v.getPaddingRight(), v.getPaddingBottom());
     }
   }
 
-  private static void setPaddingBottom(View v, int paddingBottom) {
-    if (v.getPaddingBottom() != paddingBottom) {
-      v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), paddingBottom);
+  private static void setPaddingBottom(View v, int bottom) {
+    if (v.getPaddingBottom() != bottom) {
+      v.setPadding(v.getPaddingLeft(), v.getPaddingTop(), v.getPaddingRight(), bottom);
     }
   }
 

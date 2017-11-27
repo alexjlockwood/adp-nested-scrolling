@@ -2,7 +2,6 @@ package design.shapeshifter.nestedscrolling;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.view.NestedScrollingParentHelper;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +19,8 @@ class CustomNestedScrollView2 extends NestedScrollView2 {
   }
 
   @Override
-  public void onNestedPreScroll(@NonNull View target, int dx, int dy, int[] consumed, int type) {
+  public void onNestedPreScroll(
+      @NonNull View target, int dx, int dy, int[] consumed, int type) {
     final RecyclerView recyclerView = (RecyclerView) target;
     if ((dy < 0 && isScrolledToTop(recyclerView))
         || (dy > 0 && !isScrolledToBottom(this))) {
@@ -37,7 +37,8 @@ class CustomNestedScrollView2 extends NestedScrollView2 {
   }
 
   @Override
-  public boolean onNestedPreFling(@NonNull View target, float velX, float velY) {
+  public boolean onNestedPreFling(
+      @NonNull View target, float velX, float velY) {
     final RecyclerView recyclerView = (RecyclerView) target;
     if ((velY < 0 && isScrolledToTop(recyclerView))
         || (velY > 0 && !isScrolledToBottom(this))) {
