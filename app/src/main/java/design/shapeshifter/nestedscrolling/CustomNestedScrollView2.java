@@ -21,9 +21,10 @@ class CustomNestedScrollView2 extends NestedScrollView2 {
   @Override
   public void onNestedPreScroll(
       @NonNull View target, int dx, int dy, int[] consumed, int type) {
-    final RecyclerView recyclerView = (RecyclerView) target;
-    if ((dy < 0 && isScrolledToTop(recyclerView))
-        || (dy > 0 && !isScrolledToBottom(this))) {
+    final NestedScrollView nsv = this;
+    final RecyclerView rv = (RecyclerView) target;
+    if ((dy < 0 && isScrolledToTop(rv))
+        || (dy > 0 && !isScrolledToBottom(nsv))) {
       // The NestedScrollView should steal the scroll event away from the
       // RecyclerView in one of two cases: (1) if the user is scrolling their
       // finger down and the RecyclerView is scrolled to the top, or (2) if
@@ -39,9 +40,10 @@ class CustomNestedScrollView2 extends NestedScrollView2 {
   @Override
   public boolean onNestedPreFling(
       @NonNull View target, float velX, float velY) {
-    final RecyclerView recyclerView = (RecyclerView) target;
-    if ((velY < 0 && isScrolledToTop(recyclerView))
-        || (velY > 0 && !isScrolledToBottom(this))) {
+    final NestedScrollView nsv = this;
+    final RecyclerView rv = (RecyclerView) target;
+    if ((velY < 0 && isScrolledToTop(rv))
+        || (velY > 0 && !isScrolledToBottom(nsv))) {
       // The NestedScrollView should steal the fling event away from the
       // RecyclerView in one of two cases: (1) if the user is flinging their
       // finger down and the RecyclerView is scrolled to the top, or (2) if
