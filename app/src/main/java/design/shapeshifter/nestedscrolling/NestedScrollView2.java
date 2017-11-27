@@ -21,22 +21,12 @@ class NestedScrollView2 extends NestedScrollView implements NestedScrollingParen
     parentHelper = new NestedScrollingParentHelper(this);
   }
 
-  @Override
-  public boolean onStartNestedScroll(
-      @NonNull View child, @NonNull View target, int axes) {
-    return onStartNestedScroll(child, target, axes, ViewCompat.TYPE_TOUCH);
-  }
+  // NestedScrollingParent2 methods.
 
   @Override
   public boolean onStartNestedScroll(
       @NonNull View child, @NonNull View target, int axes, int type) {
     return (axes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
-  }
-
-  @Override
-  public void onNestedScrollAccepted(
-      @NonNull View child, @NonNull View target, int axes) {
-    onNestedScrollAccepted(child, target, axes, ViewCompat.TYPE_TOUCH);
   }
 
   @Override
@@ -48,20 +38,8 @@ class NestedScrollView2 extends NestedScrollView implements NestedScrollingParen
 
   @Override
   public void onNestedPreScroll(
-      @NonNull View target, int dx, int dy, @NonNull int[] consumed) {
-    onNestedPreScroll(target, dx, dy, consumed, ViewCompat.TYPE_TOUCH);
-  }
-
-  @Override
-  public void onNestedPreScroll(
       @NonNull View target, int dx, int dy, @Nullable int[] consumed, int type) {
     dispatchNestedPreScroll(dx, dy, consumed, null, type);
-  }
-
-  @Override
-  public void onNestedScroll(
-      @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
-    onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, ViewCompat.TYPE_TOUCH);
   }
 
   @Override
@@ -75,14 +53,42 @@ class NestedScrollView2 extends NestedScrollView implements NestedScrollingParen
   }
 
   @Override
-  public void onStopNestedScroll(@NonNull View target) {
-    onStopNestedScroll(target, ViewCompat.TYPE_TOUCH);
-  }
-
-  @Override
   public void onStopNestedScroll(@NonNull View target, int type) {
     parentHelper.onStopNestedScroll(target, type);
     stopNestedScroll(type);
+  }
+
+  // NestedScrollingParent methods. For the most part these methods delegate
+  // to the NestedScrollingParent2 methods above, passing TYPE_TOUCH as the
+  // type to maintain API compatibility.
+
+  @Override
+  public boolean onStartNestedScroll(
+      @NonNull View child, @NonNull View target, int axes) {
+    return onStartNestedScroll(child, target, axes, ViewCompat.TYPE_TOUCH);
+  }
+
+  @Override
+  public void onNestedScrollAccepted(
+      @NonNull View child, @NonNull View target, int axes) {
+    onNestedScrollAccepted(child, target, axes, ViewCompat.TYPE_TOUCH);
+  }
+
+  @Override
+  public void onNestedPreScroll(
+      @NonNull View target, int dx, int dy, @NonNull int[] consumed) {
+    onNestedPreScroll(target, dx, dy, consumed, ViewCompat.TYPE_TOUCH);
+  }
+
+  @Override
+  public void onNestedScroll(
+      @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+    onNestedScroll(target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, ViewCompat.TYPE_TOUCH);
+  }
+
+  @Override
+  public void onStopNestedScroll(@NonNull View target) {
+    onStopNestedScroll(target, ViewCompat.TYPE_TOUCH);
   }
 
   @Override

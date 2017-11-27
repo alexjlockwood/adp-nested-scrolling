@@ -6,6 +6,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -19,12 +20,13 @@ class CustomNestedScrollView2 extends NestedScrollView2 {
   }
 
   @Override
-  public void onNestedPreScroll(
-      @NonNull View target, int dx, int dy, int[] consumed, int type) {
-    final NestedScrollView nsv = this;
+  public void onNestedPreScroll(@NonNull View target, int dx, int dy, int[] consumed, int type) {
     final RecyclerView rv = (RecyclerView) target;
-    if ((dy < 0 && isScrolledToTop(rv))
-        || (dy > 0 && !isScrolledToBottom(nsv))) {
+    final LinearLayoutManager lm = (LinearLayoutManager) rv.getLayoutManager();
+    final boolean isRvScrolledToTop =
+        lm.findFirstVisibleItemPosition() == 0 && lm.findViewByPosition(0).getTop() == 0;
+    final boolean isNsvScrolledToBottom = !canScrollVertically(1);
+    if ((dy < 0 && isRvScrolledToTop) || (dy > 0 && !isNsvScrolledToBottom)) {
       // The NestedScrollView should steal the scroll event away from the
       // RecyclerView in one of two cases: (1) if the user is scrolling their
       // finger down and the RecyclerView is scrolled to the top, or (2) if
@@ -35,41 +37,5 @@ class CustomNestedScrollView2 extends NestedScrollView2 {
       return;
     }
     super.onNestedPreScroll(target, dx, dy, consumed, type);
-  }
-
-  @Override
-  public boolean onNestedPreFling(
-      @NonNull View target, float velX, float velY) {
-    final NestedScrollView nsv = this;
-    final RecyclerView rv = (RecyclerView) target;
-    if ((velY < 0 && isScrolledToTop(rv))
-        || (velY > 0 && !isScrolledToBottom(nsv))) {
-      // The NestedScrollView should steal the fling event away from the
-      // RecyclerView in one of two cases: (1) if the user is flinging their
-      // finger down and the RecyclerView is scrolled to the top, or (2) if
-      // the user is flinging their finger up and the NestedScrollView is
-      // not scrolled to the bottom.
-      fling((int) velY);
-      return true;
-    }
-    return super.onNestedPreFling(target, velX, velY);
-  }
-
-  /**
-   * Returns true iff the {@link NestedScrollView} is scrolled to the bottom
-   * of its viewport.
-   */
-  private static boolean isScrolledToBottom(NestedScrollView nsv) {
-    return !nsv.canScrollVertically(1);
-  }
-
-  /**
-   * Returns true iff the vertical {@link RecyclerView} is scrolled to the
-   * top (i.e. its first item is completely visible).
-   */
-  private static boolean isScrolledToTop(RecyclerView rv) {
-    final LinearLayoutManager lm = (LinearLayoutManager) rv.getLayoutManager();
-    return lm.findFirstVisibleItemPosition() == 0
-        && lm.findViewByPosition(0).getTop() == 0;
   }
 }
