@@ -29,11 +29,11 @@
       app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
   </FrameLayout>
 
-  <design.shapeshifter.nestedscrolling.CustomNestedScrollView2
+  <alexjlockwood.nestedscrolling.CustomNestedScrollView2
     android:id='@+id/nestedscrollview'
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="design.shapeshifter.nestedscrolling.CustomBehavior">
+    app:layout_behavior="alexjlockwood.nestedscrolling.CustomBehavior">
 
     <FrameLayout
       android:id="@+id/card_container"
@@ -83,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <design.shapeshifter.nestedscrolling.MaxHeightRecyclerView
+            <alexjlockwood.nestedscrolling.MaxHeightRecyclerView
               android:id="@+id/card_recyclerview"
               android:layout_width="match_parent"
               android:layout_height="wrap_content" />
@@ -112,6 +112,6 @@
 
     </FrameLayout>
 
-  </design.shapeshifter.nestedscrolling.CustomNestedScrollView2>
+  </alexjlockwood.nestedscrolling.CustomNestedScrollView2>
 
 </android.support.design.widget.CoordinatorLayout>

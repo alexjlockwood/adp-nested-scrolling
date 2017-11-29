@@ -1,4 +1,4 @@
-package design.shapeshifter.nestedscrolling;
+package alexjlockwood.nestedscrolling;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

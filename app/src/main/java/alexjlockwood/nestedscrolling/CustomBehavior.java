@@ -1,4 +1,4 @@
-package design.shapeshifter.nestedscrolling;
+package alexjlockwood.nestedscrolling;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
