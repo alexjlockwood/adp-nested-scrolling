@@ -20,6 +20,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 
+/**
+ * The sample app's main activity.
+ */
 public class MainActivity extends AppCompatActivity {
 
   // True iff the shadow view between the card header and the RecyclerView

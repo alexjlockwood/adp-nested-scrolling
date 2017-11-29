@@ -12,7 +12,7 @@ import android.view.View;
  * A custom {@link NestedScrollView} that customizes the sample app's
  * nested scrolling behavior.
  */
-class CustomNestedScrollView2 extends NestedScrollView2 {
+public class CustomNestedScrollView2 extends NestedScrollView2 {
 
   public CustomNestedScrollView2(Context context, AttributeSet attrs) {
     super(context, attrs);

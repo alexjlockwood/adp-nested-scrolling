@@ -8,7 +8,7 @@ import android.util.Log;
 /**
  * A {@link RecyclerView} with an optional maximum height.
  */
-class MaxHeightRecyclerView extends RecyclerView {
+public class MaxHeightRecyclerView extends RecyclerView {
   private int mMaxHeight = -1;
 
   public MaxHeightRecyclerView(Context context, AttributeSet attrs) {

@@ -13,7 +13,7 @@ import android.view.View;
 /**
  * A {@link NestedScrollView} that implements the {@link NestedScrollingParent2} interface.
  */
-class NestedScrollView2 extends NestedScrollView implements NestedScrollingParent2 {
+public class NestedScrollView2 extends NestedScrollView implements NestedScrollingParent2 {
   private final NestedScrollingParentHelper parentHelper;
 
   public NestedScrollView2(Context context, AttributeSet attrs) {
