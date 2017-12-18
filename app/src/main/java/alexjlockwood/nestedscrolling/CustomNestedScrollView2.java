@@ -19,22 +19,36 @@ public class CustomNestedScrollView2 extends NestedScrollView2 {
   }
 
   @Override
-  public void onNestedPreScroll(@NonNull View target, int dx, int dy, int[] consumed, int type) {
+  public void onNestedPreScroll(@NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
     final RecyclerView rv = (RecyclerView) target;
-    final LinearLayoutManager lm = (LinearLayoutManager) rv.getLayoutManager();
-    final boolean isRvScrolledToTop =
-        lm.findFirstVisibleItemPosition() == 0 && lm.findViewByPosition(0).getTop() == 0;
-    final boolean isNsvScrolledToBottom = !canScrollVertically(1);
-    if ((dy < 0 && isRvScrolledToTop) || (dy > 0 && !isNsvScrolledToBottom)) {
+    if ((dy < 0 && isRvScrolledToTop(rv)) || (dy > 0 && !isNsvScrolledToBottom(this))) {
       // The NestedScrollView should steal the scroll event away from the
-      // RecyclerView in one of two cases: (1) if the user is scrolling their
-      // finger down and the RecyclerView is scrolled to the top, or (2) if
-      // the user is scrolling their finger up and the NestedScrollView is
-      // not scrolled to the bottom.
+      // RecyclerView if: (1) the user is scrolling their finger down and the
+      // RecyclerView is scrolled to the top of its content, or (2) the user
+      // is scrolling their finger up and the NestedScrollView is not scrolled
+      // to the bottom of its content.
       scrollBy(0, dy);
       consumed[1] = dy;
       return;
     }
     super.onNestedPreScroll(target, dx, dy, consumed, type);
+  }
+
+  /**
+   * Returns true iff the {@link NestedScrollView} is scrolled to the bottom
+   * of its content (i.e. the card is completely expanded).
+   */
+  private static boolean isNsvScrolledToBottom(NestedScrollView nsv) {
+    return !nsv.canScrollVertically(1);
+  }
+
+  /**
+   * Returns true iff the {@link RecyclerView} is scrolled to the
+   * top of its content (i.e. its first item is completely visible).
+   */
+  private static boolean isRvScrolledToTop(RecyclerView rv) {
+    final LinearLayoutManager lm = (LinearLayoutManager) rv.getLayoutManager();
+    return lm.findFirstVisibleItemPosition() == 0
+        && lm.findViewByPosition(0).getTop() == 0;
   }
 }
